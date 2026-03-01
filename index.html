@@ -4,12 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <title>BBPLC docs</title>
 </head>
 
 <body>
+    <h1>BBPLC Documentation</h1>
 
+    <h2>What is BBPLC?</h2>
+    <p>
+        BBPLC (Basic syntax Based Programming Language Compiler) is a low-level system programming language inspired by
+        the philosophy of HLA (High-Level Assembler), the simplicity of BASIC syntax, and the hardware-oriented design
+        of PL/M. It aims to provide structured low-level programming while remaining compact, transparent, and close to
+        the machine.
+    </p>
 
+    <p>
+        The primary goal of BBPLC is to generate extremely compact and highly efficient native binaries by leveraging
+        FASM
+        as its backend assembler. The language focuses on minimal runtime overhead, predictable memory behavior, and
+        direct
+        control over execution flow.
+    </p>
+
+    <p>
+        BBPLC is not intended to compete with mature system languages such as Zig, Nim, or V. Instead, it is designed as
+        a
+        focused, lightweight tool for building small, fast, and architecture-aware native programs.
+    </p>
+
+    <p>
+        In its initial iterations, BBPLC targets x86 architecture (16-bit, 32-bit, and 64-bit) for Linux, Windows, and
+        BIOS
+        real-mode environments. The compilation model relies on generating FASM-compatible assembly as an intermediate
+        step,
+        allowing the production of native executables, object files, and dynamic libraries.
+    </p>
+
+    <h2>Why BBPLC exists</h2>
+    <p>
+        BBPLC exists as an experimental project driven by the desire to explore direct translation of high-level source
+        statements into assembly instructions. The goal was to investigate how closely a structured language can map to
+        machine-level behavior without introducing heavy abstractions or runtime overhead.
+    </p>
+
+    <p>
+        The language combines the ambition to remain close to assembly in expressive power while following a conceptual
+        direction similar to PL/M — serving as a logical, simplified iteration of that idea in a modern context.
+    </p>
+
+    <h2>Philosophy</h2>
+    <p>
+        BBPLC follows three core principles:
+    </p>
+    <ul>
+        <li><strong>Fast</strong> — minimal overhead and direct execution.</li>
+        <li><strong>Compact</strong> — smallest possible binary output.</li>
+        <li><strong>Minimal</strong> — no unnecessary abstractions or hidden mechanisms.</li>
+    </ul>
+
+    <h2>Grammar</h2>
+    <ul>
+        <li><strong>PRINT</strong> — outputs a value to the console.</li>
+        <li><strong>READ</strong> — reads input from the user.</li>
+        <li><strong>TOSTR</strong> — converts a number to a string.</li>
+        <li><strong>TOINT</strong> — converts a string to a number.</li>
+        <li><strong>IF</strong> — starts a conditional block.</li>
+        <li><strong>THEN</strong> — marks the true branch of a condition.</li>
+        <li><strong>ELSE</strong> — marks the false branch of a condition.</li>
+        <li><strong>ENDIF</strong> — ends a conditional block.</li>
+        <li><strong>LABEL</strong> — defines a label for jumps.</li>
+        <li><strong>GOTO</strong> — performs an unconditional jump to a label.</li>
+        <li><strong>DECLARE</strong> — declares and optionally initializes a variable.</li>
+        <li><strong>RESERVE</strong> — reserves memory space without initialization.</li>
+        <li><strong>MOV</strong> — moves a value into a variable.</li>
+        <li><strong>ADD</strong> — adds two values.</li>
+        <li><strong>MUL</strong> — multiplies two values.</li>
+        <li><strong>DIV</strong> — divides one value by another.</li>
+        <li><strong>SQR</strong> — calculates the square of a value.</li>
+        <li><strong>POW</strong> — raises a value to a specified power.</li>
+        <li><strong>PUSH</strong> — pushes a value onto the stack.</li>
+        <li><strong>POP</strong> — pops a value from the stack.</li>
+        <li><strong>MACRO</strong> — defines a reusable macro block.</li>
+        <li><strong>ENDMACRO</strong> — ends a macro definition.</li>
+        <li><strong>PROC</strong> — defines a procedure (function).</li>
+        <li><strong>ENDPROC</strong> — ends a procedure definition.</li>
+    </ul>
+
+    <div class="code-box">
+        <h2>Hello, World!</h2>
+        <pre>
+    DECLARE DB greeting = "Hello, World!"
+    PRINT greeting
+        </pre>
+
+        <h3>Compiling:</h3>
+        <pre>
+    python3 bbplc.py your_file.bbplc
+    fasm output.asm
+        </pre>
+    </div>
 </body>
 
 </html>
