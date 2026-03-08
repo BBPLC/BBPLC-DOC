@@ -73,6 +73,7 @@
         <li><strong>IF</strong> — starts a conditional block.</li>
         <li><strong>THEN</strong> — marks the true branch of a condition.</li>
         <li><strong>ELSE</strong> — marks the false branch of a condition.</li>
+        <li><strong>ELSE IF</strong> — allows chaining multiple conditions.</li>
         <li><strong>ENDIF</strong> — ends a conditional block.</li>
         <li><strong>LABEL</strong> — defines a label for jumps.</li>
         <li><strong>GOTO</strong> — performs an unconditional jump to a label.</li>
@@ -90,6 +91,7 @@
         <li><strong>ENDMACRO</strong> — ends a macro definition.</li>
         <li><strong>PROC</strong> — defines a procedure (function).</li>
         <li><strong>ENDPROC</strong> — ends a procedure definition.</li>
+        <li><strong>RETURN</strong> — returns a value from a procedure.</li>
     </ul>
 
     <h2>Examples</h2>
@@ -293,85 +295,6 @@ PRINT first_num
         </pre>
     </div>
 
-    <div class="code-box">
-        <h2>08_string_conversion.bbplc</h2>
-        <p>String and number conversion: TOSTR, TOINT.</p>
-        <pre>
-; Example 8: String and number conversion
-; Demonstrates: TOSTR, TOINT, DECLARE
-
-; Initial number
-DECLARE DD numb = 12345
-
-; Labels for output
-DECLARE DB conversion_label = "Number converted to string: "
-DECLARE DB number_label = "Initial number: "
-
-; === Print initial number ===
-PRINT number_label
-; Convert number to string (TOSTR creates buffer)
-TOSTR numb
-; Print converted number
-PRINT numb
-PRTLN
-
-; Empty line for separation
-PRTLN
-
-; === String to number conversion ===
-; Declare buffer for input
-DECLARE RESERVE RB input_str 20
-DECLARE DB input_prompt = "Enter number (1-10): "
-
-; Print prompt and read input
-PRINT input_prompt
-READ input_str
-
-; Declare variable for result
-DECLARE DD parsed_num = 0
-; Copy value
-MOV parsed_num input_str
-; Convert string to number (from input_str buffer to parsed_num)
-TOINT parsed_num
-
-; Print conversion result
-DECLARE DB result_label = "Parsed number: "
-PRINT result_label
-TOSTR parsed_num
-PRINT parsed_num
-PRTLN
-        </pre>
-    </div>
-
-    <div class="code-box">
-        <h2>09_reserved_memory.bbplc</h2>
-        <p>Reserved memory buffers: DECLARE RESERVE.</p>
-        <pre>
-; Example 9: Reserved memory
-; Demonstrates: DECLARE RESERVE, READ
-
-; String with prompt
-DECLARE DB instruction = "Enter your name: "
-; Reserved buffer 64 bytes for name input
-DECLARE RESERVE RB name_buffer 64
-; Greeting
-DECLARE DB greeting = "Hello, "
-
-; === Input data ===
-; Print prompt
-PRINT instruction
-; Read string into reserved buffer
-READ name_buffer
-
-; === Output result ===
-; Print greeting
-PRINT greeting
-; Print entered name
-PRINT name_buffer
-; New line
-PRTLN
-        </pre>
-    </div>
 
     <h3>Control Flow</h3>
 
@@ -465,6 +388,151 @@ PRTLN
     </div>
 
     <div class="code-box">
+        <h2>08_string_conversion.bbplc</h2>
+        <p>String and number conversion: TOSTR, TOINT.</p>
+        <pre>
+; Example 8: String and number conversion
+; Demonstrates: TOSTR, TOINT, DECLARE
+
+; Initial number
+DECLARE DD numb = 12345
+
+; Labels for output
+DECLARE DB conversion_label = "Number converted to string: "
+DECLARE DB number_label = "Initial number: "
+
+; === Print initial number ===
+PRINT number_label
+; Convert number to string (TOSTR creates buffer)
+TOSTR numb
+; Print converted number
+PRINT numb
+PRTLN
+
+; Empty line for separation
+PRTLN
+
+; === String to number conversion ===
+; Declare buffer for input
+DECLARE RESERVE RB input_str 20
+DECLARE DB input_prompt = "Enter number (1-10): "
+
+; Print prompt and read input
+PRINT input_prompt
+READ input_str
+
+; Declare variable for result
+DECLARE DD parsed_num = 0
+; Copy value
+MOV parsed_num input_str
+; Convert string to number (from input_str buffer to parsed_num)
+TOINT parsed_num
+
+; Print conversion result
+DECLARE DB result_label = "Parsed number: "
+PRINT result_label
+TOSTR parsed_num
+PRINT parsed_num
+PRTLN
+        </pre>
+    </div>
+
+    <div class="code-box">
+        <h2>09_reserved_memory.bbplc</h2>
+        <p>Reserved memory buffers: DECLARE RESERVE.</p>
+        <pre>
+; Example 9: Reserved memory
+; Demonstrates: DECLARE RESERVE, READ
+
+; String with prompt
+DECLARE DB instruction = "Enter your name: "
+; Reserved buffer 64 bytes for name input
+DECLARE RESERVE RB name_buffer 64
+; Greeting
+DECLARE DB greeting = "Hello, "
+
+; === Input data ===
+; Print prompt
+PRINT instruction
+; Read string into reserved buffer
+READ name_buffer
+
+; === Output result ===
+; Print greeting
+PRINT greeting
+; Print entered name
+PRINT name_buffer
+; New line
+PRTLN
+        </pre>
+    </div>
+    <div class="code-box">
+        <h2>10_complex_program.bbplc</h2>
+        <p>Complex program combining multiple operations: Simple calculator.</p>
+        <pre>
+; Example 10: Complex program - Simple calculator
+; Demonstrates: all language features together
+
+; Variables for results and temporary storage
+DECLARE DD result = 0
+DECLARE DD temp = 15
+
+; Strings for output
+DECLARE DB welcome = "=== Simple Calculator ==="
+DECLARE DB calc1 = "15 + 10 = "
+DECLARE DB calc2 = "25 - 8 = "
+DECLARE DB calc3 = "7 * 6 = "
+DECLARE DB calc4 = "Final result:"
+
+; === Program header ===
+PRINT welcome
+PRTLN
+PRTLN
+
+; === Operation 1: addition (15 + 10) ===
+; Copy 15 to result
+MOV result temp
+; Add 10
+ADD result 10
+; Print result
+PRINT calc1
+TOSTR result
+PRINT result
+PRTLN
+
+; === Operation 2: subtraction (25 - 8) ===
+; Copy 25 to result
+MOV result 25
+; Subtract 8
+SUB result 8
+; Print result
+PRINT calc2
+TOSTR result
+PRINT result
+PRTLN
+
+; === Operation 3: multiplication (7 * 6) ===
+; Copy 7 to result
+MOV result 7
+; Multiply by 6
+MUL result 6
+; Print result
+PRINT calc3
+TOSTR result
+PRINT result
+PRTLN
+
+; === Final result ===
+PRTLN
+PRINT calc4
+PRTLN
+TOSTR result
+PRINT result
+PRTLN
+        </pre>
+    </div>
+
+    <div class="code-box">
         <h2>11_comparison_branching.bbplc</h2>
         <p>Different comparison operators in IF statements.</p>
         <pre>
@@ -513,6 +581,212 @@ ELSE
     PRINT working_msg
 ENDIF
 
+PRTLN
+        </pre>
+    </div>
+
+    <div class="code-box">
+        <h2>12_countdown.bbplc</h2>
+        <p>Countdown loop using LABEL/GOTO and SUB.</p>
+        <pre>
+; Example 12: Countdown
+; Demonstrates: loop with LABEL/GOTO and SUB
+
+; Variable for countdown
+DECLARE DD countdown = 10
+; Strings for output
+DECLARE DB countdown_msg = "Countdown: "
+DECLARE DB liftoff_msg = "LIFTOFF!"
+
+; === Label for loop jump ===
+LABEL countdown_loop
+
+; Print current countdown value
+PRINT countdown_msg
+; Convert number to string
+TOSTR countdown
+; Print number
+PRINT countdown
+PRTLN
+
+; === Decrement counter by 1 ===
+SUB countdown 1
+
+; === Check: is countdown still active? ===
+IF countdown >= 0
+THEN
+    ; If counter is non-negative, repeat loop
+    GOTO countdown_loop
+ELSE
+    ; If counter is negative, exit
+ENDIF
+
+; After loop print message
+PRTLN
+PRINT liftoff_msg
+PRTLN
+        </pre>
+    </div>
+
+    <div class="code-box">
+        <h2>13_factorial.bbplc</h2>
+        <p>Factorial calculation using loop and multiplication.</p>
+        <pre>
+; Example 13: Factorial
+; Demonstrates: loop, multiplication, conditions
+
+; Number for factorial
+DECLARE DD n = 5
+; Variable for result accumulation (start with 1)
+DECLARE DD factorial = 1
+; Counter for loop
+DECLARE DD counter = 1
+
+; Strings for output
+DECLARE DB input_label = "Computing factorial of: "
+DECLARE DB result_label = "Result: "
+
+; === Print initial number ===
+PRINT input_label
+TOSTR n
+PRINT n
+PRTLN
+PRTLN
+
+; === Factorial calculation loop ===
+LABEL factorial_loop
+
+; Check: counter <= n?
+IF counter <= n
+THEN
+    ; Multiply factorial by current counter value
+    MUL factorial counter
+    ; Increment counter
+    ADD counter 1
+    ; Repeat loop
+    GOTO factorial_loop
+ELSE
+    ; Exit loop when counter > n
+ENDIF
+
+; === Print result ===
+PRINT result_label
+TOSTR factorial
+PRINT factorial
+PRTLN
+        </pre>
+    </div>
+
+    <div class="code-box">
+        <h2>14_even_odd_checker.bbplc</h2>
+        <p>Even/odd checker using IF-ELSE and DIV.</p>
+        <pre>
+; Example 14: Even/odd checker
+; Demonstrates: IF-ELSE, MOV, DIV
+
+; Working variable for division
+DECLARE DD numbers = 10
+; Numbers to check
+DECLARE DD check1 = 7
+DECLARE DD check2 = 12
+DECLARE DD check3 = 33
+
+; Result messages
+DECLARE DB even_msg = "Even number"
+DECLARE DB odd_msg = "Odd number"
+DECLARE DB divider_msg = "Dividing by 2:"
+DECLARE DB colon = ": "
+
+; === Check 7 ===
+PRINT check1
+PRINT colon
+; Copy 7 to working variable
+MOV numbers check1
+; Divide by 2 (if divides evenly = even)
+DIV numbers 2
+; Restore original value
+MOV numbers check1
+; If remainder is zero, number is even
+IF numbers == 0
+THEN
+    PRINT even_msg
+ELSE
+    PRINT odd_msg
+ENDIF
+PRTLN
+
+; === Check 12 ===
+PRINT check2
+PRINT colon
+MOV numbers check2
+DIV numbers 2
+MOV numbers check2
+IF numbers == 0
+THEN
+    PRINT even_msg
+ELSE
+    PRINT odd_msg
+ENDIF
+PRTLN
+
+; === Check 33 ===
+PRINT check3
+PRINT colon
+MOV numbers check3
+DIV numbers 2
+MOV numbers check3
+IF numbers == 0
+THEN
+    PRINT even_msg
+ELSE
+    PRINT odd_msg
+ENDIF
+PRTLN
+        </pre>
+    </div>
+
+    <div class="code-box">
+        <h2>15_sum_series.bbplc</h2>
+        <p>Sum of series from 1 to N using loop and ADD.</p>
+        <pre>
+; Example 15: Sum of series from 1 to N
+; Demonstrates: loop, ADD, conditions
+
+; Upper limit
+DECLARE DD n = 10
+; Variable for sum accumulation
+DECLARE DD sum = 0
+; Counter for loop
+DECLARE DD counter = 1
+
+; Strings for output
+DECLARE DB start_msg = "Sum of 1 to 10:"
+DECLARE DB result_msg = "Result: "
+
+; === Print operation description ===
+PRINT start_msg
+PRTLN
+
+; === Sum calculation loop ===
+LABEL sum_loop
+
+; Check: counter <= n?
+IF counter <= n
+THEN
+    ; Add current value to sum
+    ADD sum counter
+    ; Increment counter
+    ADD counter 1
+    ; Repeat loop
+    GOTO sum_loop
+ELSE
+    ; Exit loop when counter > n
+ENDIF
+
+; === Print final result ===
+PRINT result_msg
+TOSTR sum
+PRINT sum
 PRTLN
         </pre>
     </div>
@@ -719,293 +993,159 @@ PRTLN
         </pre>
     </div>
 
-</body>
+    <div class="code-box">
+        <h2>20_else_if.bbplc</h2>
+        <p>Multiple conditions with ELSE IF chaining.</p>
+        <pre>
+; Example 20: Else If chaining
+; Demonstrates: multiple conditions with ELSE IF
 
-</html>
-<h2>10_complex_program.bbplc</h2>
-<p>Complex program combining multiple operations: Simple calculator.</p>
-<pre>
-; Example 10: Complex program - Simple calculator
-; Demonstrates: all language features together
+; Student score
+DECLARE DD score = 85
 
-; Variables for results and temporary storage
+; Grade labels
+DECLARE DB grade_A = "Grade A (90+)"
+DECLARE DB grade_B = "Grade B (80-89)"
+DECLARE DB grade_C = "Grade C (70-79)"
+DECLARE DB grade_D = "Grade D (60-69)"
+DECLARE DB grade_F = "Grade F (<60)"
+
+DECLARE DB result_label = "Your grade: "
+
+; Print score
+DECLARE DB score_label = "Score: "
+PRINT score_label
+TOSTR score
+PRINT score
+PRTLN
+PRTLN
+
+; Check grade with multiple conditions
+IF score >= 90
+THEN
+    PRINT result_label
+    PRINT grade_A
+ELSE IF score >= 80
+THEN
+    PRINT result_label
+    PRINT grade_B
+ELSE IF score >= 70
+THEN
+    PRINT result_label
+    PRINT grade_C
+ELSE IF score >= 60
+THEN
+    PRINT result_label
+    PRINT grade_D
+ELSE
+    PRINT result_label
+    PRINT grade_F
+ENDIF
+        </pre>
+    </div>
+
+    <h3>Macros and Procedures</h3>
+
+    <div class="code-box">
+        <h2>21_macros.bbplc</h2>
+        <p>Reusable code blocks using macros.</p>
+        <pre>
+; Example 21: Macros
+; Demonstrates: MACRO and ENDMACRO for reusable code blocks
+
+; Define a macro to print a number with a label
+MACRO print_with_label
+    PRINT label
+    TOSTR value
+    PRINT value
+    PRTLN
+ENDMACRO
+
+; Variables
+DECLARE DD value = 42
+DECLARE DB label = "The answer is: "
+
+; Use the macro
+print_with_label
+
+; Another macro usage with different values
+DECLARE DD value = 100
+DECLARE DB label = "New value: "
+print_with_label
+
+; More macro usage
+DECLARE DD value = 7
+DECLARE DB label = "Lucky number: "
+print_with_label
+        </pre>
+    </div>
+
+    <div class="code-box">
+        <h2>22_procedures.bbplc</h2>
+        <p>Procedures (functions) with return values.</p>
+        <pre>
+; Example 22: Procedures (Functions)
+; Demonstrates: PROC, ENDPROC, and RETURN
+
+; Define a simple procedure that doubles a number
+PROC double_value
+    MUL input 2
+    RETURN result
+ENDPROC
+
+; Variables for the procedure
+DECLARE DD input = 21
 DECLARE DD result = 0
-DECLARE DD temp = 15
 
-; Strings for output
-DECLARE DB welcome = "=== Simple Calculator ==="
-DECLARE DB calc1 = "15 + 10 = "
-DECLARE DB calc2 = "25 - 8 = "
-DECLARE DB calc3 = "7 * 6 = "
-DECLARE DB calc4 = "Final result:"
-
-; === Program header ===
-PRINT welcome
-PRTLN
+; Call the procedure
+DECLARE DB before_label = "Original value: "
+PRINT before_label
+TOSTR input
+PRINT input
 PRTLN
 
-; === Operation 1: addition (15 + 10) ===
-; Copy 15 to result
-MOV result temp
-; Add 10
-ADD result 10
-; Print result
-PRINT calc1
+; Execute procedure (conceptually, currently just shows the pattern)
+MUL input 2
+MOV result input
+
+DECLARE DB after_label = "Doubled value: "
+PRINT after_label
 TOSTR result
 PRINT result
 PRTLN
 
-; === Operation 2: subtraction (25 - 8) ===
-; Copy 25 to result
-MOV result 25
-; Subtract 8
-SUB result 8
-; Print result
-PRINT calc2
-TOSTR result
-PRINT result
-PRTLN
+; Example of procedure concept with another calculation
+PROC square_number
+    SQR num
+    RETURN squared
+ENDPROC
 
-; === Operation 3: multiplication (7 * 6) ===
-; Copy 7 to result
-MOV result 7
-; Multiply by 6
-MUL result 6
-; Print result
-PRINT calc3
-TOSTR result
-PRINT result
-PRTLN
+DECLARE DD num = 5
+DECLARE DD squared = 0
 
-; === Final result ===
-PRTLN
-PRINT calc4
-PRTLN
-TOSTR result
-PRINT result
+DECLARE DB square_label = "5 squared is: "
+PRINT square_label
+MOV squared num
+SQR squared
+TOSTR squared
+PRINT squared
 PRTLN
         </pre>
-</div>
+    </div>
 
-<div class="code-box">
-    <h2>12_countdown.bbplc</h2>
-    <p>Countdown loop using LABEL/GOTO and SUB.</p>
-    <pre>
-; Example 12: Countdown
-; Demonstrates: loop with LABEL/GOTO and SUB
-
-; Variable for countdown
-DECLARE DD countdown = 10
-; Strings for output
-DECLARE DB countdown_msg = "Countdown: "
-DECLARE DB liftoff_msg = "LIFTOFF!"
-
-; === Label for loop jump ===
-LABEL countdown_loop
-
-; Print current countdown value
-PRINT countdown_msg
-; Convert number to string
-TOSTR countdown
-; Print number
-PRINT countdown
-PRTLN
-
-; === Decrement counter by 1 ===
-SUB countdown 1
-
-; === Check: is countdown still active? ===
-IF countdown >= 0
-THEN
-    ; If counter is non-negative, repeat loop
-    GOTO countdown_loop
-ELSE
-    ; If counter is negative, exit
-ENDIF
-
-; After loop print message
-PRTLN
-PRINT liftoff_msg
-PRTLN
-        </pre>
-</div>
-
-<div class="code-box">
-    <h2>13_factorial.bbplc</h2>
-    <p>Factorial calculation using loop and multiplication.</p>
-    <pre>
-; Example 13: Factorial
-; Demonstrates: loop, multiplication, conditions
-
-; Number for factorial
-DECLARE DD n = 5
-; Variable for result accumulation (start with 1)
-DECLARE DD factorial = 1
-; Counter for loop
-DECLARE DD counter = 1
-
-; Strings for output
-DECLARE DB input_label = "Computing factorial of: "
-DECLARE DB result_label = "Result: "
-
-; === Print initial number ===
-PRINT input_label
-TOSTR n
-PRINT n
-PRTLN
-PRTLN
-
-; === Factorial calculation loop ===
-LABEL factorial_loop
-
-; Check: counter <= n?
-IF counter <= n
-THEN
-    ; Multiply factorial by current counter value
-    MUL factorial counter
-    ; Increment counter
-    ADD counter 1
-    ; Repeat loop
-    GOTO factorial_loop
-ELSE
-    ; Exit loop when counter > n
-ENDIF
-
-; === Print result ===
-PRINT result_label
-TOSTR factorial
-PRINT factorial
-PRTLN
-        </pre>
-</div>
-
-<div class="code-box">
-    <h2>14_even_odd_checker.bbplc</h2>
-    <p>Even/odd checker using IF-ELSE and DIV.</p>
-    <pre>
-; Example 14: Even/odd checker
-; Demonstrates: IF-ELSE, MOV, DIV
-
-; Working variable for division
-DECLARE DD numbers = 10
-; Numbers to check
-DECLARE DD check1 = 7
-DECLARE DD check2 = 12
-DECLARE DD check3 = 33
-
-; Result messages
-DECLARE DB even_msg = "Even number"
-DECLARE DB odd_msg = "Odd number"
-DECLARE DB divider_msg = "Dividing by 2:"
-DECLARE DB colon = ": "
-
-; === Check 7 ===
-PRINT check1
-PRINT colon
-; Copy 7 to working variable
-MOV numbers check1
-; Divide by 2 (if divides evenly = even)
-DIV numbers 2
-; Restore original value
-MOV numbers check1
-; If remainder is zero, number is even
-IF numbers == 0
-THEN
-    PRINT even_msg
-ELSE
-    PRINT odd_msg
-ENDIF
-PRTLN
-
-; === Check 12 ===
-PRINT check2
-PRINT colon
-MOV numbers check2
-DIV numbers 2
-MOV numbers check2
-IF numbers == 0
-THEN
-    PRINT even_msg
-ELSE
-    PRINT odd_msg
-ENDIF
-PRTLN
-
-; === Check 33 ===
-PRINT check3
-PRINT colon
-MOV numbers check3
-DIV numbers 2
-MOV numbers check3
-IF numbers == 0
-THEN
-    PRINT even_msg
-ELSE
-    PRINT odd_msg
-ENDIF
-PRTLN
-        </pre>
-</div>
-
-<div class="code-box">
-    <h2>15_sum_series.bbplc</h2>
-    <p>Sum of series from 1 to N using loop and ADD.</p>
-    <pre>
-; Example 15: Sum of series from 1 to N
-; Demonstrates: loop, ADD, conditions
-
-; Upper limit
-DECLARE DD n = 10
-; Variable for sum accumulation
-DECLARE DD sum = 0
-; Counter for loop
-DECLARE DD counter = 1
-
-; Strings for output
-DECLARE DB start_msg = "Sum of 1 to 10:"
-DECLARE DB result_msg = "Result: "
-
-; === Print operation description ===
-PRINT start_msg
-PRTLN
-
-; === Sum calculation loop ===
-LABEL sum_loop
-
-; Check: counter <= n?
-IF counter <= n
-THEN
-    ; Add current value to sum
-    ADD sum counter
-    ; Increment counter
-    ADD counter 1
-    ; Repeat loop
-    GOTO sum_loop
-ELSE
-    ; Exit loop when counter > n
-ENDIF
-
-; === Print final result ===
-PRINT result_msg
-TOSTR sum
-PRINT sum
-PRTLN
-        </pre>
-</div>
-
-<div class="code-box">
-    <h2>hello.bbplc</h2>
-    <p>Simple hello world variant.</p>
-    <pre>
+    <div class="code-box">
+        <h2>hello.bbplc</h2>
+        <p>Simple hello world variant.</p>
+        <pre>
 DECLARE DB greeting = "Hello, world"
 PRINT greeting
         </pre>
-</div>
+    </div>
 
-<div class="code-box">
-    <h2>io.bbplc</h2>
-    <p>Basic input/output example.</p>
-    <pre>
+    <div class="code-box">
+        <h2>io.bbplc</h2>
+        <p>Basic input/output example.</p>
+        <pre>
 DECLARE RESERVE RB n 10
 DECLARE DB greeting = "Input your secret number: "
 DECLARE DB secret = "I think your secret number is: "
@@ -1019,12 +1159,12 @@ PRINT secret
 TOSTR n
 PRINT n
         </pre>
-</div>
+    </div>
 
-<div class="code-box">
-    <h2>mov.bbplc</h2>
-    <p>Demonstrates MOV operations and type conversions.</p>
-    <pre>
+    <div class="code-box">
+        <h2>mov.bbplc</h2>
+        <p>Demonstrates MOV operations and type conversions.</p>
+        <pre>
 DECLARE DD num1 = 152
 DECLARE DB str1 = "num1 is:"
 
@@ -1052,6 +1192,8 @@ PRINT num1
 
 PRTLN
         </pre>
-</div>
+    </div>
 
-</div>
+</body>
+
+</html>
